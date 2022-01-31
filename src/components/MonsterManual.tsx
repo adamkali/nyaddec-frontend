@@ -1,119 +1,104 @@
 import { json } from "stream/consumers";
 import DetailedLog from "../classes/DetailedLog";
-import monsters from "../monsters.json";
-import {
-	GiBeastEye,
-	GiDragonHead,
-	GiSlime,
-	GiBodyBalance,
-	GiFire,
-	GiMonsterGrasp,
-	GiBigGear,
-	GiCarnivorousPlant,
-	GiHalfDead,
-	GiDevilMask,
-	GiTransparentSlime,
-	GiFairyWings,
-	GiAngelWings,
-	GiGears,
-} from "react-icons/gi";
 import Table from "react-bootstrap/Table";
+import Button from "react-bootstrap/Button";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
+import Form from "react-bootstrap/Form";
 import { Monster } from "../App";
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
+import { BsArrowCounterclockwise } from "react-icons/bs";
+import { IoAdd } from "react-icons/io5";
 export default function MonsterCard({
+	monsterManual,
 	addToEncounter,
+	icon,
+	updateEncounter,
 }: {
+	monsterManual: Monster[];
 	addToEncounter: (monster: Monster) => void;
+	icon: (meta: string) => JSX.Element | undefined;
+	updateEncounter: (monsters: Monster[]) => void;
 }): JSX.Element {
-	const icon = (meta: string) => {
-		if (meta.includes("aberration")) {
-			return (
-				<div style={{ fontSize: "14" }}>
-					<GiSlime />
-				</div>
-			);
-		} else if (meta.includes("humanoid") || meta.includes("giant")) {
-			return (
-				<div style={{ fontSize: "14" }}>
-					<GiBodyBalance />
-				</div>
-			);
-		} else if (meta.includes("dragon")) {
-			return (
-				<div style={{ fontSize: "14" }}>
-					<GiDragonHead />
-				</div>
-			);
-		} else if (meta.includes("beast")) {
-			return (
-				<div style={{ fontSize: "14" }}>
-					<GiBeastEye />
-				</div>
-			);
-		} else if (meta.includes("elemental")) {
-			return (
-				<div style={{ fontSize: "14" }}>
-					<GiFire />
-				</div>
-			);
-		} else if (meta.includes("monstrosity")) {
-			return (
-				<div style={{ fontSize: "14" }}>
-					<GiMonsterGrasp />
-				</div>
-			);
-		} else if (meta.includes("construct")) {
-			return (
-				<div style={{ fontSize: "14" }}>
-					<GiBigGear />
-				</div>
-			);
-		} else if (meta.includes("plant")) {
-			return (
-				<div style={{ fontSize: "14" }}>
-					<GiCarnivorousPlant />
-				</div>
-			);
-		} else if (meta.includes("fiend")) {
-			return (
-				<div style={{ fontSize: "14" }}>
-					<GiDevilMask />
-				</div>
-			);
-		} else if (meta.includes("undead")) {
-			return (
-				<div style={{ fontSize: "14" }}>
-					<GiHalfDead />
-				</div>
-			);
-		} else if (meta.includes("ooze")) {
-			return (
-				<div style={{ fontSize: "14" }}>
-					<GiTransparentSlime />
-				</div>
-			);
-		} else if (meta.includes("fey")) {
-			return (
-				<div style={{ fontSize: "14" }}>
-					<GiFairyWings />
-				</div>
-			);
-		} else if (meta.includes("celestial")) {
-			return (
-				<div style={{ fontSize: "14" }}>
-					<GiAngelWings />
-				</div>
-			);
+	const [updatedMonsters, setUpatedMonsters] = useState(monsterManual);
+	const bank: Monster[] = monsterManual;
+
+	const search = (value: string): void => {
+		if (updatedMonsters.length !== bank.length) {
+			setUpatedMonsters([...bank]);
 		}
+		const tempMonsters = [] as Monster[];
+		updatedMonsters.forEach((mon) => {
+			mon.name.includes(value) && tempMonsters.push(mon);
+		});
+		setUpatedMonsters(tempMonsters);
 	};
 
+	const searchMeta = (value: string): void => {
+		if (updatedMonsters.length !== bank.length) {
+			setUpatedMonsters([...bank]);
+		}
+		const tempMonsters = [] as Monster[];
+		updatedMonsters.forEach((mon) => {
+			mon.meta.includes(value) && tempMonsters.push(mon);
+		});
+		setUpatedMonsters(tempMonsters);
+	};
+
+	const reset = () => setUpatedMonsters(bank);
+
 	return (
-		<div style={{ margin: "50px" }}>
-			<div className="card" style={{ width: "50%", height: "1000px" }}>
-				<div className="card-header">Monster Manual</div>
+		<div style={{ margin: "25px", width: "45%" }}>
+			<div className="card" style={{ height: "1000px" }}>
+				<div className="card-header">
+					<div style={{ padding: "5px" }}>
+						<label
+							className="display-4"
+							style={{ padding: "10px 10px 10px 0" }}
+						>
+							<span>Monster manual</span>
+						</label>
+						<Button
+							className="btn btn-warning"
+							onClick={reset}
+							style={{ float: "right", verticalAlign: "middle" }}
+						>
+							<div>
+								<BsArrowCounterclockwise />
+							</div>
+						</Button>
+					</div>
+					<form style={{ display: "flex" }}>
+						<div style={{ width: "50%" }}>
+							<span>
+								<FloatingLabel
+									controlId="floatingInput"
+									label="Search Monster Name"
+									className="mb-xl-10"
+								>
+									<Form.Control
+										type="search"
+										onChange={(e) => search(e.currentTarget.value)}
+									/>
+								</FloatingLabel>
+							</span>
+						</div>
+						<div style={{ width: "50%" }}>
+							<span>
+								<FloatingLabel
+									controlId="floatingInput"
+									label="Search Monster Name"
+									className="mb-xl-10"
+								>
+									<Form.Control
+										type="search"
+										onChange={(e) => searchMeta(e.currentTarget.value)}
+									/>
+								</FloatingLabel>
+							</span>
+						</div>
+					</form>
+				</div>
 				<div className="card-body overflow-auto">
-					<input defaultValue={"S"} />
 					<Table striped hover>
 						<thead>
 							<tr>
@@ -127,12 +112,13 @@ export default function MonsterCard({
 								<th>Wisdom</th>
 								<th>Charisma</th>
 								<th>Challenge</th>
+								<th></th>
 							</tr>
 						</thead>
-						{monsters.map((mon) => {
+						{updatedMonsters.map((mon) => {
 							return (
 								<tbody style={{ overflowY: "auto" }}>
-									<tr onClick={() => addToEncounter(mon)}>
+									<tr>
 										<td style={{ fontSize: 22 }}>{icon(mon?.meta)}</td>
 										<td>{mon?.hit_points}</td>
 										<th>{mon?.name}</th>
@@ -143,6 +129,14 @@ export default function MonsterCard({
 										<td>{mon?.wisdom + mon.wis_mod}</td>
 										<td>{mon?.charisma + mon.cha_mod}</td>
 										<td>{mon?.challenge}</td>
+										<td>
+											<Button
+												className={"btn-success"}
+												onClick={() => addToEncounter(mon)}
+											>
+												<IoAdd />
+											</Button>
+										</td>
 									</tr>
 								</tbody>
 							);
