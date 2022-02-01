@@ -3,6 +3,9 @@ import { Monster } from "../App";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import { BsArrowCounterclockwise } from "react-icons/bs";
+import DifficultyCalculatordifficulty, {
+	Difficulty,
+} from "../helperFunctions/difficultyCalculater";
 
 export default function EncounterList({
 	updatedEncounter,
@@ -16,28 +19,125 @@ export default function EncounterList({
 	updateEncounter: (monster: Monster[]) => void;
 }): JSX.Element {
 	const [encounterList, setEncounterList] = useState([] as Monster[]);
-
-	const pcStats = {
-		number: 4,
-		level: 5,
-	};
-
-	const difficultyLevel = {
-		level: 1,
-		
-	}
+	const [encounterDifficulties, setEncounterDifficulties] = useState(
+		{} as Difficulty,
+	);
 
 	useEffect(() => {
 		setEncounterList([...updatedEncounter]);
+		// TO DO: Set up a party class for this
+		setEncounterDifficulties(
+			DifficultyCalculatordifficulty(),
+			// party in TO DO will go here.
+		);
 	}, [updatedEncounter]);
+
+	const encounterLevel = (): JSX.Element => {
+		let exp: number = 0;
+
+		encounterList.forEach((mon) => {
+			const tempChallenge = mon.challenge.replace("(", "").replace(",", "");
+			const challenge = tempChallenge.split(" ");
+			exp += +challenge[1];
+		});
+
+		const span = (experience: number): JSX.Element => {
+			if (experience >= encounterDifficulties.deadly) {
+				return (
+					<Table>
+						<tr>
+							<td>Easy</td>
+							<td>Medium</td>
+							<td>Hard</td>
+							<td>Deadly</td>
+						</tr>
+						<tr>
+							<td colSpan={4} style={{ backgroundColor: "purple" }} />
+						</tr>
+					</Table>
+				);
+			} else if (
+				experience < encounterDifficulties.deadly &&
+				experience >= encounterDifficulties.hard
+			) {
+				return (
+					<Table>
+						<tr>
+							<td>Easy</td>
+							<td>Medium</td>
+							<td>Hard</td>
+							<td>Deadly</td>
+						</tr>
+						<tr>
+							<td colSpan={3} style={{ backgroundColor: "red" }} />
+							<td />
+						</tr>
+					</Table>
+				);
+			} else if (
+				experience < encounterDifficulties.hard &&
+				experience >= encounterDifficulties.medium
+			) {
+				return (
+					<Table>
+						<tr>
+							<td>Easy</td>
+							<td>Medium</td>
+							<td>Hard</td>
+							<td>Deadly</td>
+						</tr>
+						<tr>
+							<td colSpan={2} style={{ backgroundColor: "green" }} />
+							<td />
+							<td />
+						</tr>
+					</Table>
+				);
+			} else if (
+				experience < encounterDifficulties.medium &&
+				experience >= encounterDifficulties.easy
+			) {
+				return (
+					<Table>
+						<tr>
+							<td>Easy</td>
+							<td>Medium</td>
+							<td>Hard</td>
+							<td>Deadly</td>
+						</tr>
+						<tr>
+							<td style={{ backgroundColor: "green" }} />
+							<td />
+							<td />
+							<td />
+						</tr>
+					</Table>
+				);
+			} else {
+				return (
+					<Table>
+						<tr>
+							<td>Easy</td>
+							<td>Medium</td>
+							<td>Hard</td>
+							<td>Deadly</td>
+						</tr>
+						<tr>
+							<td colSpan={4} style={{ backgroundColor: "pink" }}>
+								TO EASY
+							</td>
+						</tr>
+					</Table>
+				);
+			}
+		};
+
+		return <div>{span(exp)}</div>;
+	};
 
 	const reset = () => {
 		setEncounterList([] as Monster[]);
 	};
-
-	const difficulty = () => {
-
-	}
 
 	const tempMonster = {
 		id: "Please Choose a monster from the Monster Manual.",
@@ -91,18 +191,7 @@ export default function EncounterList({
 							</div>
 						</Button>
 					</div>
-					<span>
-						<Table>
-							<thead>
-								<tr>
-									<th>Easy</th>
-									<th>Medium</th>
-									<th>Hard</th>
-									<th>Deadly</th>
-								</tr>
-							</thead>
-						</Table>
-					</span>
+					<span>{encounterLevel}</span>
 				</div>
 				<div className="card-body overflow-auto">
 					<Table striped hover>

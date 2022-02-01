@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import "./App.css";
-import monsters from "./monsters.json";
+import monsters from "./data/monsters.json";
 import MonsterCard from "./components/MonsterManual";
 import EncounterList from "./components/EncounterList";
 import {
