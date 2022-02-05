@@ -1,11 +1,10 @@
-import { json } from "stream/consumers";
-import DetailedLog from "../classes/DetailedLog";
+import DetailedLog from "../../../classes/DetailedLog";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
-import { Monster } from "../App";
-import { useState, useEffect } from "react";
+import { Monster } from "../index";
+import { useState, useEffect, DetailedHTMLProps, HTMLAttributes } from "react";
 import { BsArrowCounterclockwise } from "react-icons/bs";
 import { IoAdd } from "react-icons/io5";
 export default function MonsterCard({
@@ -20,6 +19,7 @@ export default function MonsterCard({
 	updateEncounter: (monsters: Monster[]) => void;
 }): JSX.Element {
 	const [updatedMonsters, setUpatedMonsters] = useState(monsterManual);
+	const [fontColor, setFontColor] = useState("black");
 	const bank: Monster[] = monsterManual;
 
 	const search = (value: string): void => {
@@ -42,6 +42,20 @@ export default function MonsterCard({
 			mon.meta.includes(value) && tempMonsters.push(mon);
 		});
 		setUpatedMonsters(tempMonsters);
+	};
+
+	const enterRow = (
+		event: React.MouseEvent<HTMLTableRowElement, MouseEvent>,
+	): void => {
+		event.currentTarget.style.backgroundColor = styles.after.backgroundColor;
+		setFontColor(styles.after.fontColor);
+	};
+
+	const leaveRow = (
+		event: React.MouseEvent<HTMLTableRowElement, MouseEvent>,
+	): void => {
+		event.currentTarget.style.backgroundColor = styles.before.backgroundColor;
+		setFontColor(styles.before.fontColor);
 	};
 
 	const reset = () => setUpatedMonsters(bank);
@@ -118,17 +132,34 @@ export default function MonsterCard({
 						{updatedMonsters.map((mon) => {
 							return (
 								<tbody style={{ overflowY: "auto" }}>
-									<tr>
-										<td style={{ fontSize: 22 }}>{icon(mon?.meta)}</td>
-										<td>{mon?.hit_points}</td>
-										<th>{mon?.name}</th>
-										<td>{mon?.strength + mon.str_mod}</td>
-										<td>{mon?.dexterity + mon.dex_mod}</td>
-										<td>{mon?.constitution + mon.con_mod}</td>
-										<td>{mon?.intellegence + mon.int_mod}</td>
-										<td>{mon?.wisdom + mon.wis_mod}</td>
-										<td>{mon?.charisma + mon.cha_mod}</td>
-										<td>{mon?.challenge}</td>
+									<tr
+										onMouseOver={(event) => enterRow(event)}
+										onMouseOut={(event) => leaveRow(event)}
+									>
+										<td style={{ fontSize: 22, color: fontColor }}>
+											{icon(mon?.meta)}
+										</td>
+										<td style={{ color: fontColor }}>{mon?.hit_points}</td>
+										<th style={{ color: fontColor }}>{mon?.name}</th>
+										<td style={{ color: fontColor }}>
+											{mon?.strength + mon.str_mod}
+										</td>
+										<td style={{ color: fontColor }}>
+											{mon?.dexterity + mon.dex_mod}
+										</td>
+										<td style={{ color: fontColor }}>
+											{mon?.constitution + mon.con_mod}
+										</td>
+										<td style={{ color: fontColor }}>
+											{mon?.intellegence + mon.int_mod}
+										</td>
+										<td style={{ color: fontColor }}>
+											{mon?.wisdom + mon.wis_mod}
+										</td>
+										<td style={{ color: fontColor }}>
+											{mon?.charisma + mon.cha_mod}
+										</td>
+										<td style={{ color: fontColor }}>{mon?.challenge}</td>
 										<td>
 											<Button
 												className={"btn-success"}
@@ -147,3 +178,15 @@ export default function MonsterCard({
 		</div>
 	);
 }
+
+import "./App.css";
+const styles = {
+	after: {
+		backgroundColor: "#2f2940",
+		fontColor: "#aeabb8",
+	},
+	before: {
+		backgroundColor: "white",
+		fontColor: "black",
+	},
+};

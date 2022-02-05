@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { Monster } from "../App";
+import { Monster } from "../../../App";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import { BsArrowCounterclockwise } from "react-icons/bs";
 import DifficultyCalculatordifficulty, {
 	Difficulty,
-} from "../helperFunctions/difficultyCalculater";
+} from "../../../helperFunctions/difficultyCalculater";
 
 export default function EncounterList({
 	updatedEncounter,

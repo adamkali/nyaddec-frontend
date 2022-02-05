@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import "./App.css";
-import monsters from "./data/monsters.json";
+import monsters from "../../data/monsters.json";
 import MonsterCard from "./components/MonsterManual";
 import EncounterList from "./components/EncounterList";
 import {
@@ -19,7 +18,6 @@ import {
 	GiAngelWings,
 	GiGears,
 } from "react-icons/gi";
-import { IconBase } from "react-icons";
 export type Monster = {
 	id: number;
 	name: string;
@@ -55,86 +53,86 @@ export interface FuncProp {
 	addToEncounter: (monster: Monster) => void;
 }
 
-function App() {
+export default function EncounterBuilder() {
 	const [updatedEncounter, setUpdatedEncounter] = useState([] as Monster[]);
 	const monsterManual: Monster[] = monsters;
 
 	const icon = (meta: string): JSX.Element | undefined => {
 		if (meta.includes("aberration")) {
 			return (
-				<div style={{ fontSize: "14" }}>
+				<div style={{ fontSize: "13" }}>
 					<GiSlime />
 				</div>
 			);
 		} else if (meta.includes("humanoid") || meta.includes("giant")) {
 			return (
-				<div style={{ fontSize: "14" }}>
+				<div style={{ fontSize: "13" }}>
 					<GiBodyBalance />
 				</div>
 			);
 		} else if (meta.includes("dragon")) {
 			return (
-				<div style={{ fontSize: "14" }}>
+				<div style={{ fontSize: "13" }}>
 					<GiDragonHead />
 				</div>
 			);
 		} else if (meta.includes("beast")) {
 			return (
-				<div style={{ fontSize: "14" }}>
+				<div style={{ fontSize: "13" }}>
 					<GiBeastEye />
 				</div>
 			);
 		} else if (meta.includes("elemental")) {
 			return (
-				<div style={{ fontSize: "14" }}>
+				<div style={{ fontSize: "13" }}>
 					<GiFire />
 				</div>
 			);
 		} else if (meta.includes("monstrosity")) {
 			return (
-				<div style={{ fontSize: "14" }}>
+				<div style={{ fontSize: "13" }}>
 					<GiMonsterGrasp />
 				</div>
 			);
 		} else if (meta.includes("construct")) {
 			return (
-				<div style={{ fontSize: "14" }}>
+				<div style={{ fontSize: "13" }}>
 					<GiBigGear />
 				</div>
 			);
 		} else if (meta.includes("plant")) {
 			return (
-				<div style={{ fontSize: "14" }}>
+				<div style={{ fontSize: "13" }}>
 					<GiCarnivorousPlant />
 				</div>
 			);
 		} else if (meta.includes("fiend")) {
 			return (
-				<div style={{ fontSize: "14" }}>
+				<div style={{ fontSize: "13" }}>
 					<GiDevilMask />
 				</div>
 			);
 		} else if (meta.includes("undead")) {
 			return (
-				<div style={{ fontSize: "14" }}>
+				<div style={{ fontSize: "13" }}>
 					<GiHalfDead />
 				</div>
 			);
 		} else if (meta.includes("ooze")) {
 			return (
-				<div style={{ fontSize: "14" }}>
+				<div style={{ fontSize: "13" }}>
 					<GiTransparentSlime />
 				</div>
 			);
 		} else if (meta.includes("fey")) {
 			return (
-				<div style={{ fontSize: "14" }}>
+				<div style={{ fontSize: "13" }}>
 					<GiFairyWings />
 				</div>
 			);
 		} else if (meta.includes("celestial")) {
 			return (
-				<div style={{ fontSize: "14" }}>
+				<div style={{ fontSize: "13" }}>
 					<GiAngelWings />
 				</div>
 			);
@@ -148,7 +146,7 @@ function App() {
 	const removeEncounter = (monster: Monster): void => {
 		const tempEncounter = [...updatedEncounter];
 		const index = tempEncounter.findIndex((m) => m.id === monster.id);
-		tempEncounter.splice(index, 1);
+		tempEncounter.splice(index, 0);
 		setUpdatedEncounter([...tempEncounter]);
 	};
 
@@ -171,11 +169,9 @@ function App() {
 	};
 
 	return (
-		<div className="App" style={{ display: "flex" }}>
+		<div style={{ display: "flex" }}>
 			<MonsterCard {...funcProps} />
 			<EncounterList {...encounterListProps} />
 		</div>
 	);
 }
-
-export default App;
