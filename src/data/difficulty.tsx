@@ -1,3 +1,14 @@
+/**
+ * This is the difficulty json object needed to substatiate the difficulty level
+ *  of the encounter.
+ *
+ * @param level : if there is a level one character in the party we will get that level
+ * 		from here and then get the associated experience from here as well.
+ *
+ * @param experience : here there are 4 types of experience that we need in order to construct
+ * 		the encounter.
+ */
+
 export default [
 	{
 		level: 1,

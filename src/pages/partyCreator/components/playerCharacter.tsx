@@ -1,9 +1,21 @@
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import levelOptions from "../../../data/levelOptions";
 import PlayerCharacter from "../../../classes/PlayerCharacter";
 import { useEffect, useState } from "react";
 
+/**
+ *
+ * @param injectionPlayerCharacter
+ *
+ * @param playerCharacter The player character is a default character that will be passed in by
+ * 		the injection where it will be changed by this component.
+ *
+ * @param updatePlayers See the documentation in party.tsx line 32 for more information.
+ *
+ * @returns JSX.Element that will display a form to the user to edit the player character and
+ * 		then be sent off to the server, to be added to the database. The backend is still being
+ * 		developed.
+ */
 export default function PlayerCharacterForm({
 	playerCharacter,
 	updatePlayers,
@@ -19,6 +31,7 @@ export default function PlayerCharacterForm({
 	useEffect(() => {
 		updatePlayers(player);
 	}, [player]);
+	// END Effects
 
 	// Form changes
 	const changeName = (name: string): void => {
@@ -38,6 +51,7 @@ export default function PlayerCharacterForm({
 		update.playerLevel = +lvl;
 		setPlayer(update);
 	};
+	// END Form changes
 
 	return (
 		<div>
@@ -56,7 +70,7 @@ export default function PlayerCharacterForm({
 					<Form.Control
 						type="HP"
 						placeholder={String(player?.playerHitPoints)}
-						onChange={(event) => event.currentTarget.value}
+						onChange={(event) => changeHitPoints(event.target.value)}
 					/>
 				</Form.Group>
 

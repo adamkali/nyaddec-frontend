@@ -1,22 +1,37 @@
 import { useEffect, useState } from "react";
-import { Monster } from "../../../App";
+import Monster from "../../../classes/Monster";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import { BsArrowCounterclockwise } from "react-icons/bs";
 import DifficultyCalculatordifficulty, {
 	Difficulty,
 } from "../../../helperFunctions/difficultyCalculater";
+import PlayerCharacter from "../../../classes/PlayerCharacter";
 
+/**
+ * The encounter list is going to display the encounter list component to construct the difficulty calculation
+ * 		it uses a couple of different strategies to show the data like a json injection wich is discussed shortly.
+ *
+ * @param injectEncounterList An injection json
+ *
+ * @param updatedEncounter {child} The parent callback state from index.tsx. This callback will get populated by the
+ * 		MonsterManual.tsx add button at line 165 and uses the addToEncounter callback function injected from index.tsx
+ * 		int MonsterManual.tsx.
+ * @param removeEncounter {child} A callback function from index.tsx that will remove the monster from the encounter list.
+ * 		This fires when the remove button here is clicked at line 262.
+ * @param icon {child} The callback function from index.tsx that will call a helper function to display what type of monster
+ * 		being displayed
+ *
+ * @returns A JSX.Element to diplay this component.
+ */
 export default function EncounterList({
 	updatedEncounter,
 	removeEncounter,
 	icon,
-	updateEncounter,
 }: {
 	updatedEncounter: Monster[];
 	removeEncounter: (monster: Monster) => void;
 	icon: (meta: string) => JSX.Element | undefined;
-	updateEncounter: (monster: Monster[]) => void;
 }): JSX.Element {
 	const [encounterList, setEncounterList] = useState([] as Monster[]);
 	const [encounterDifficulties, setEncounterDifficulties] = useState(
@@ -25,10 +40,9 @@ export default function EncounterList({
 
 	useEffect(() => {
 		setEncounterList([...updatedEncounter]);
-		// TO DO: Set up a party class for this
+		// TO DO: The party will be got from the API
 		setEncounterDifficulties(
-			DifficultyCalculatordifficulty(),
-			// party in TO DO will go here.
+			DifficultyCalculatordifficulty([] as PlayerCharacter[]),
 		);
 	}, [updatedEncounter]);
 

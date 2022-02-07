@@ -5,12 +5,16 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { EncounterBuilder, PartySelect } from "./elements";
 
+/**
+ * Main renderer for the website. This also includes all the routes for the
+ *  webpages.
+ */
 ReactDOM.render(
 	<React.StrictMode>
 		<Router>
 			<Routes>
-				<Route path="/EncounterBuilder" element={EncounterBuilder} />
 				<Route path="/" element={PartySelect} />
+				<Route path="/EncounterBuilder" element={EncounterBuilder} />
 			</Routes>
 		</Router>
 	</React.StrictMode>,

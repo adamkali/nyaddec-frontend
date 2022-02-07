@@ -1,12 +1,16 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { IoAdd, IoEnter } from "react-icons/io5";
 import PlayerCharacter from "../../../classes/PlayerCharacter";
-import { updateFor } from "typescript";
 import PlayerCharacterForm from "./playerCharacter";
 
-export default function Party() {
+/**
+ * This will be the main entry point after the user logs in or signs up.
+ * @returns JSX.Eelement
+ */
+export default function Party(): JSX.Element {
 	// String states
 	const [partyName, setPartyName] = useState("");
 	const [partyNameStage, setPartyNameStage] = useState("");
@@ -22,8 +26,14 @@ export default function Party() {
 		setPlayers(++tempNum);
 		const update = [...party];
 		update.push(player);
+		setParty(update);
 	};
 
+	/**
+	 * @param playerCharacter an injection function that is used to pass in a player. When the player is updated
+	 * 		it will change the party state and when the EncouterList is updated it will then show the difficulty
+	 * 		This will be handled by the backend server which needs to be built.
+	 */
 	const updatePlayers = (playerCharacter: PlayerCharacter): void => {
 		const update = [...party];
 
@@ -83,6 +93,11 @@ export default function Party() {
 								injectPlayerCharacter.playerCharacter = pc;
 								<PlayerCharacterForm {...injectPlayerCharacter} />;
 							})}
+							{party.length >= 1 && (
+								<Link to={"/Encounter"}>
+									<Button>Build Encounter!</Button>
+								</Link>
+							)}
 						</div>
 					)}
 				</Form>

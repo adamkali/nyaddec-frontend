@@ -1,3 +1,4 @@
+import PlayerCharacter from "../classes/PlayerCharacter";
 import difficultyJson from "../data/difficulty";
 
 export type Difficulty = {
@@ -7,22 +8,16 @@ export type Difficulty = {
 	deadly: number;
 };
 
-export default function DifficultyCalculator(): Difficulty {
-	const party = [
-		{
-			level: 5,
-		},
-		{
-			level: 6,
-		},
-		{
-			level: 5,
-		},
-		{
-			level: 4,
-		},
-	];
-
+/**
+ *
+ * @param party : Inputs an array of party members to calculate difficulty for the encounter
+ *
+ * @returns Difficulty: This is a helper class to return to the EncounterList.tsx
+ * 		to populate the encounter list difficulty table at line 44 called const span.
+ */
+export default function DifficultyCalculator(
+	party: PlayerCharacter[],
+): Difficulty {
 	const addToDifficulty = (diffA: Difficulty, diffB: Difficulty): void => {
 		diffB.easy += diffA.easy;
 		diffB.medium += diffA.medium;
@@ -39,7 +34,7 @@ export default function DifficultyCalculator(): Difficulty {
 		};
 		party.forEach((pc) =>
 			difficultyJson.forEach((diff) => {
-				pc.level === diff.level
+				pc.playerLevel === diff.level
 					? addToDifficulty(diff.exp, tempTotalDifficulty)
 					: void 0;
 			}),

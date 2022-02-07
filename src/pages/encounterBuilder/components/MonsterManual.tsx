@@ -3,20 +3,29 @@ import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
-import { Monster } from "../index";
+import Monster from "../../../classes/Monster";
 import { useState, useEffect, DetailedHTMLProps, HTMLAttributes } from "react";
 import { BsArrowCounterclockwise } from "react-icons/bs";
 import { IoAdd } from "react-icons/io5";
+
+/**
+ *
+ * @param injectMonsterCard An injection json for the MonsterCard that passes in needed parameters
+ * @param monsterManual {child} The MonsterManual is loaded in from index.tsx from monsters.json
+ * 		to be used here as a way for the user to add a new Monster to the encounter in
+ * 		encounterList.tsx
+ * @param addToEncounter {child} A callback function from index.tsx that will add a monster to the
+ * 		EncouneterList.tsx.
+ * @returns
+ */
 export default function MonsterCard({
 	monsterManual,
 	addToEncounter,
 	icon,
-	updateEncounter,
 }: {
 	monsterManual: Monster[];
 	addToEncounter: (monster: Monster) => void;
 	icon: (meta: string) => JSX.Element | undefined;
-	updateEncounter: (monsters: Monster[]) => void;
 }): JSX.Element {
 	const [updatedMonsters, setUpatedMonsters] = useState(monsterManual);
 	const [fontColor, setFontColor] = useState("black");
