@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { EncounterBuilder, PartySelect } from "./elements";
+import { EncounterBuilder, PartySelect, MonsterPage } from "./elements";
 
 /**
  * Main renderer for the website. This also includes all the routes for the
@@ -15,6 +15,7 @@ ReactDOM.render(
 			<Routes>
 				<Route path="/" element={PartySelect} />
 				<Route path="/EncounterBuilder" element={EncounterBuilder} />
+				<Route path="/MonsterPage/:id" element={MonsterPage} />
 			</Routes>
 		</Router>
 	</React.StrictMode>,
