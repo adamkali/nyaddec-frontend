@@ -1,12 +1,12 @@
-#Nyaddec
+# Nyaddec
 
-##N (Nyaddec is)
-##Y (Yet)
-##A (Another)
-##DD (Dungeons & Dragons)
-##EC (Encounter Creator)
+## N (Nyaddec is)
+## Y (Yet)
+## A (Another)
+## DD (Dungeons & Dragons)
+## EC (Encounter Creator)
 
-###nyaddec-frontend
+### nyaddec-frontend
 
 Nyaddec's Frontend is made with Typescript react and uses an asynchronous format to communicate to nyaddec-backend. There are docstrings the React Componenets, classes, important data, and integral helper functions. The development mindset to this front end is to have pages be as self contained as posssible. For example: the file structure may look something like this: 
 ```
