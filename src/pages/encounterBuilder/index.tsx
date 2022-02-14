@@ -33,9 +33,11 @@ export default function EncounterBuilder(): JSX.Element {
 	};
 
 	return (
-		<div style={{ display: "flex" }}>
-			<MonsterCard {...injectMonsterCard} />
-			<EncounterList {...injectEncounterListProps} />
-		</div>
+		<>
+			<div style={{ display: "flex" }}>
+				<MonsterCard {...injectMonsterCard} />
+				<EncounterList {...injectEncounterListProps} />
+			</div>
+		</>
 	);
 }

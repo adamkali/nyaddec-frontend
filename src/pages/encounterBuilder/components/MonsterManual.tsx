@@ -1,10 +1,9 @@
-import DetailedLog from "../../../classes/DetailedLog";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import Monster from "../../../classes/Monster";
-import { useState, useEffect, DetailedHTMLProps, HTMLAttributes } from "react";
+import { useState } from "react";
 import { BsArrowCounterclockwise } from "react-icons/bs";
 import { IoAdd } from "react-icons/io5";
 
@@ -188,7 +187,6 @@ export default function MonsterCard({
 	);
 }
 
-import "./App.css";
 const styles = {
 	after: {
 		backgroundColor: "#2f2940",
