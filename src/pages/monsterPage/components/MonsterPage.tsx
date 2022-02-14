@@ -1,7 +1,11 @@
 import monster from "../../../data/monsters.json";
 import Monster from "../../../classes/Monster";
 
-export default function MonsterPage(monster: Monster): JSX.Element {
+export default function MonsterPage({
+	monster
+}:{
+	monster: Monster
+}): JSX.Element {
 	return (
 		<div className="card">
 			<div className="card-header">
